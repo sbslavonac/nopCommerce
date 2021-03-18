@@ -1,0 +1,17 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Nop.Core.Domain.Catalog;
+using static Nop.Plugin.Api.Infrastructure.Constants;
+
+namespace Nop.Plugin.Api.Services
+{
+    public interface IProductAttributesApiService
+    {
+        IList<ProductAttribute> GetProductAttributes(int limit = Configurations.DefaultLimit,
+            int page = Configurations.DefaultPageValue, int sinceId = Configurations.DefaultSinceId);
+
+        int GetProductAttributesCount();
+
+        Task<ProductAttribute> GetById(int id);
+    }
+}

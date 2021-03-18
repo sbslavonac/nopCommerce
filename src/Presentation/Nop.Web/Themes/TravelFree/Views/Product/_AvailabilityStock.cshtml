@@ -1,0 +1,72 @@
+﻿@model ProductDetailsModel
+@using Nop.Core
+@using Nop.Core.Infrastructure;
+@using Nop.Services.Shipping;
+@using Nop.Services.Catalog;
+@using Nop.Web.Areas.Admin.Models.Orders
+@inject IWorkContext workContext
+@{
+
+    var warehouselist = new List<ShipmentItemModel.WarehouseInfo>();
+
+    foreach (var warehouse in (await EngineContext.Current.Resolve<IShippingService>().GetAllWarehousesAsync()))
+    {
+        var warehousestock = new ShipmentItemModel.WarehouseInfo();
+        warehousestock.WarehouseName = warehouse.Name;
+        warehousestock.WarehouseId = warehouse.Id;
+
+        var productWarehouseInventory = (await EngineContext.Current.Resolve<IProductService>().GetAllProductWarehouseInventoryRecordsAsync(@Model.Id))?.FirstOrDefault(inventory => inventory.WarehouseId == warehouse.Id);
+        if (productWarehouseInventory != null)
+        {
+            warehousestock.StockQuantity = productWarehouseInventory.StockQuantity - productWarehouseInventory.ReservedQuantity;
+            warehousestock.ReservedQuantity = productWarehouseInventory.ReservedQuantity;
+
+        }
+        warehouselist.Add(warehousestock);
+    }
+
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.StockAvailability) || Model.DisplayBackInStockSubscription)
+{
+
+    @if (!string.IsNullOrWhiteSpace(Model.StockAvailability))
+    {
+        <div class="tabset">
+            <!-- Tab 1 -->
+            <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
+            <label for="tab1">@T("Products.Availability")</label>
+            <!-- Tab 2 -->
+            <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
+            <label for="tab2">@T("admin.catalog.products.productwarehouseinventory")</label>
+
+
+            <div class="tab-panels">
+                <section id="totalstock" class="tab-panel">
+                    <div class="stock">
+                        <span class="label">@T("Products.Availability"):</span>
+                        <span class="value" id="stock-availability-value-@Model.Id">@Model.StockAvailability</span>
+                    </div>
+
+                </section>
+                <section id="stockperwarehouse" class="tab-panel">
+                    @foreach (var warehouse in warehouselist)
+                    {
+                        <div class="row_avalability">
+                            <div class="left_column_avalability" >
+                                <span class="label">@warehouse.WarehouseName</span>
+                            </div>
+                            <div class="right_column_avalability">
+                                <span class="label" id="stock-quantity-value-@warehouse.WarehouseId">@warehouse.StockQuantity</span>
+                            </div>
+                        </div>
+                    }
+
+                </section>
+            </div>
+
+        </div>
+    }
+    @await Html.PartialAsync("_BackInStockSubscription", Model)
+
+}
