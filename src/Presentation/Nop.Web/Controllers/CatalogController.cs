@@ -318,7 +318,11 @@ namespace Nop.Web.Controllers
         [CheckLanguageSeoCode(true)]
         public virtual async Task<IActionResult> SearchTermAutoComplete(string term)
         {
+            if (string.IsNullOrWhiteSpace(term))
+                return Content("");
+
             term = term.Trim();
+
             if (string.IsNullOrWhiteSpace(term) || term.Length < _catalogSettings.ProductSearchTermMinimumLength)
                 return Content("");
 
@@ -364,6 +368,7 @@ namespace Nop.Web.Controllers
 
         #region Utilities
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         private async Task<bool> CheckCategoryAvailabilityAsync(Category category)
         {
             var isAvailable = true;
@@ -387,6 +392,7 @@ namespace Nop.Web.Controllers
             return isAvailable;
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         private async Task<bool> CheckManufacturerAvailabilityAsync(Manufacturer manufacturer)
         {
             var isAvailable = true;
@@ -410,6 +416,7 @@ namespace Nop.Web.Controllers
             return isAvailable;
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         private Task<bool> CheckVendorAvailabilityAsync(Vendor vendor)
         {
             var isAvailable = true;

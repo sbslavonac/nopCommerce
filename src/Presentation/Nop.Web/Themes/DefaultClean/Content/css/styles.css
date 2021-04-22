@@ -4766,6 +4766,18 @@ label, label + * {
   margin-bottom: 5px;
 }
 
+.checkout-page .edit-address-button {
+  float: right; 
+  margin: 20px 10px 10px 12px;
+  display: none;
+}
+
+.checkout-page .delete-address-button {
+  float: right; 
+  margin: 20px 0 10px 0;
+  display: none;
+}
+
 .shipping-method .method-list,
 .payment-method .method-list {
   margin: 0 auto 30px;
@@ -4808,7 +4820,7 @@ label, label + * {
 }
 
 .payment-method .payment-details {
-  min-width: 180px;
+  width: 200px;
   display: inline-block;
   margin: 0 0 0 10px;
   text-align: left;
@@ -5259,8 +5271,7 @@ label, label + * {
   margin: 30px 0 0;
 }
 
-.search-results .warning,
-.search-results .no-result {
+.search-results .warning {
   margin: 10px 0;
   color: #e4434b;
 }

@@ -156,6 +156,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         #region Utilities
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task UpdateLocalesAsync(Product product, ProductModel model)
         {
             foreach (var localized in model.Locales)
@@ -191,6 +192,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task UpdateLocalesAsync(ProductTag productTag, ProductTagModel model)
         {
             foreach (var localized in model.Locales)
@@ -205,6 +207,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task UpdateLocalesAsync(ProductAttributeMapping pam, ProductAttributeMappingModel model)
         {
             foreach (var localized in model.Locales)
@@ -220,6 +223,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task UpdateLocalesAsync(ProductAttributeValue pav, ProductAttributeValueModel model)
         {
             foreach (var localized in model.Locales)
@@ -231,12 +235,14 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task UpdatePictureSeoNamesAsync(Product product)
         {
             foreach (var pp in await _productService.GetProductPicturesByProductIdAsync(product.Id))
                 await _pictureService.SetSeoFilenameAsync(pp.PictureId, await _pictureService.GetPictureSeNameAsync(product.Name));
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task SaveProductAclAsync(Product product, ProductModel model)
         {
             product.SubjectToAcl = model.SelectedCustomerRoleIds.Any();
@@ -262,6 +268,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task SaveCategoryMappingsAsync(Product product, ProductModel model)
         {
             var existingProductCategories = await _categoryService.GetProductCategoriesByProductIdAsync(product.Id, true);
@@ -291,6 +298,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task SaveManufacturerMappingsAsync(Product product, ProductModel model)
         {
             var existingProductManufacturers = await _manufacturerService.GetProductManufacturersByProductIdAsync(product.Id, true);
@@ -320,6 +328,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task SaveDiscountMappingsAsync(Product product, ProductModel model)
         {
             var allDiscounts = await _discountService.GetAllDiscountsAsync(DiscountType.AssignedToSkus, showHidden: true);
@@ -344,6 +353,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             await _productService.UpdateHasDiscountsAppliedAsync(product);
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task<string> GetAttributesXmlForProductAttributeCombinationAsync(IFormCollection form, List<string> warnings, int productId)
         {
             var attributesXml = string.Empty;
@@ -506,6 +516,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             return result.ToArray();
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task SaveProductWarehouseInventoryAsync(Product product, ProductModel model)
         {
             if (product == null)
@@ -604,6 +615,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             }
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task SaveConditionAttributesAsync(ProductAttributeMapping productAttributeMapping,
             ProductAttributeConditionModel model, IFormCollection form)
         {
@@ -692,6 +704,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             await _productAttributeService.UpdateProductAttributeMappingAsync(productAttributeMapping);
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task GenerateAttributeCombinationsAsync(Product product, IList<int> allowedAttributeIds = null)
         {
             var allAttributesXml = await _productAttributeParser.GenerateAllCombinationsAsync(product, true, allowedAttributeIds);

@@ -150,6 +150,7 @@ namespace Nop.Web.Areas.Admin.Controllers
 
         #region Utilities
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task<string> ValidateCustomerRolesAsync(IList<CustomerRole> customerRoles, IList<CustomerRole> existingCustomerRoles)
         {
             if (customerRoles == null)
@@ -180,6 +181,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             return string.Empty;
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         protected virtual async Task<string> ParseCustomCustomerAttributesAsync(IFormCollection form)
         {
             if (form == null)
@@ -258,6 +260,7 @@ namespace Nop.Web.Areas.Admin.Controllers
             return attributesXml;
         }
 
+        /// <returns>A task that represents the asynchronous operation</returns>
         private async Task<bool> SecondAdminAccountExistsAsync(Customer customer)
         {
             var customers = await _customerService.GetAllCustomersAsync(customerRoleIds: new[] { (await _customerService.GetCustomerRoleBySystemNameAsync(NopCustomerDefaults.AdministratorsRoleName)).Id });
